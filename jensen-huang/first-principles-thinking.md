@@ -90,3 +90,8 @@ Jensen Huang leads like a founder-engineer:
 - He doesn't chase fads—he prepares for inevitabilities.
 - He empowers engineers to take moonshot risks and backs them with time and patience.
 - He builds tools for developers, not just products—creating ecosystems, not just hardware.
+
+## References
+
+- Steve Jobs in 1983 predicting LLMs: https://tinyurl.com/429pradn 
+- Chat GPT conversation reference: https://chatgpt.com/share/67f57382-f474-800b-b6af-7152e4b32673
