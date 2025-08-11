@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Khosla Doctrine: An Interactive Exploration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Chart captions and table headers readable in both themes */
+        .chart-caption, th, .table-header {
+            color: #252422;
+        }
+        html.dark .chart-caption, html.dark th, html.dark .table-header {
+            color: #fbbf24 !important;
+        }
+        /* Modern blue/teal button styles */
+        .modern-btn, .modern-btn:visited {
+            background: linear-gradient(90deg, #2563eb 0%, #06b6d4 100%);
+            color: #fff !important;
+            border: none;
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+        .modern-btn:hover, .modern-btn:focus {
+            background: linear-gradient(90deg, #1e40af 0%, #0e7490 100%);
+            color: #fff !important;
+            box-shadow: 0 2px 12px 0 rgba(37,99,235,0.12);
+        }
+        html.dark .modern-btn, html.dark .modern-btn:visited {
+            background: linear-gradient(90deg, #0ea5e9 0%, #2dd4bf 100%);
+            color: #18181b !important;
+        }
+        html.dark .modern-btn:hover, html.dark .modern-btn:focus {
+            background: linear-gradient(90deg, #0369a1 0%, #0d9488 100%);
+            color: #18181b !important;
+        }
+        html.dark #main-nav {
+            background-color: #18181b !important;
+            border-bottom-color: #33333a !important;
+            box-shadow: 0 2px 8px 0 rgba(0,0,0,0.18) !important;
+        }
+        html.dark .nav-link {
+            color: #e5e7eb !important;
+        }
+        html.dark .nav-link.active {
+            color: #f87171 !important;
+            border-bottom-color: #f87171 !important;
+        }
+        html.dark .nav-link:hover:not(.active) {
+            color: #fbbf24 !important;
+            border-bottom-color: #fbbf24 !important;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f1ea;
+            color: #403d39;
+            scroll-behavior: smooth;
+            min-height: 100vh;
+        }
+        html.dark body {
+            background-color: #18181b;
+            color: #e5e7eb;
+        }
+        html.dark section {
+            background: #232326;
+            color: #e5e7eb;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
+        }
+        html.dark .modern-card {
+            background: #232326;
+            color: #e5e7eb;
+            border-color: #33333a;
+        }
+        html.dark .responsive-table table,
+        html.dark .responsive-table th,
+        html.dark .responsive-table td {
+            background: #232326;
+            color: #e5e7eb;
+        }
+        html.dark .bg-white, html.dark .bg-gray-50, html.dark .bg-gray-100 {
+            background-color: #232326 !important;
+            color: #e5e7eb !important;
+        }
+        html.dark .border-gray-200, html.dark .border-gray-300, html.dark .border-\[\#ccc5b9\] {
+            border-color: #33333a !important;
+        }
+        html.dark .text-\[\#252422\] {
+            color: #fbbf24 !important;
+        }
+        html.dark .text-\[\#403d39\] {
+            color: #e5e7eb !important;
+        }
+        html.dark .text-\[\#eb5e28\] {
+            color: #f87171 !important;
+        }
+        html.dark .bg-\[\#eb5e28\] {
+            background-color: #f87171 !important;
+        }
+        html.dark .bg-\[\#252422\] {
+            background-color: #18181b !important;
+        }
+        html.dark .hover\:bg-\[\#d94e1f\]:hover {
+            background-color: #b91c1c !important;
+        }
+        html.dark .shadow, html.dark .shadow-md, html.dark .shadow-sm {
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.18) !important;
+        }
+        html.dark input, html.dark textarea {
+            background: #18181b;
+            color: #e5e7eb;
+            border-color: #33333a;
+        }
+        html.dark input:focus, html.dark textarea:focus {
+            border-color: #f87171;
+            box-shadow: 0 0 0 1.5px #f8717133;
+        }
+        html.dark .nav-link.active {
+            color: #f87171 !important;
+            border-bottom-color: #f87171 !important;
+        }
+        html.dark .nav-link:hover:not(.active) {
+            color: #fbbf24 !important;
+            border-bottom-color: #fbbf24 !important;
+        }
+        html.dark footer {
+            background: #18181b;
+            color: #a1a1aa;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 260px;
+            max-height: 350px;
+        }
+        @media (min-width: 640px) {
+            .chart-container {
+                height: 320px;
+            }
+        }
+        @media (min-width: 1024px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .nav-link {
+            position: relative;
+            transition: color 0.2s, border-bottom-color 0.2s;
+        }
+        .nav-link.active {
+            color: #eb5e28;
+            border-bottom-color: #eb5e28;
+        }
+        .nav-link:hover:not(.active) {
+            color: #d94e1f;
+            border-bottom-color: #d94e1f;
+        }
+        .loader {
+            width: 32px;
+            height: 32px;
+            border: 4px solid #eb5e28;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Card hover effect */
+        .modern-card {
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .modern-card:hover {
+            box-shadow: 0 8px 32px 0 rgba(235,94,40,0.10), 0 1.5px 6px 0 rgba(64,61,57,0.06);
+            transform: translateY(-2px) scale(1.02);
+        }
+        /* Responsive table */
+        .responsive-table {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        /* Button focus/hover */
+        .modern-btn:focus, .modern-btn:hover {
+            background-color: #d94e1f !important;
+            outline: none;
+            box-shadow: 0 0 0 2px #eb5e28, 0 2px 8px 0 rgba(235,94,40,0.10);
+        }
+        /* Input focus */
+        input:focus, textarea:focus {
+            border-color: #eb5e28;
+            box-shadow: 0 0 0 1.5px #eb5e2833;
+            outline: none;
+        }
+        /* Section backgrounds for contrast */
+        section {
+            background: #fff;
+            border-radius: 1.25rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 2px 12px 0 rgba(64,61,57,0.04);
+        }
+        @media (max-width: 640px) {
+            section {
+                margin-bottom: 1.5rem;
+                border-radius: 0.75rem;
+                padding-left: 0.5rem !important;
+                padding-right: 0.5rem !important;
+            }
+        }
+        /* Footer */
+        footer {
+            background: #f4f1ea;
+            border-radius: 0 0 1.25rem 1.25rem;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <header class="text-center py-10 md:py-16 relative">
+            <div class="absolute right-4 top-4 md:right-8 md:top-8 z-30">
+                <button id="themeToggle" aria-label="Toggle dark/light mode" class="modern-btn bg-[#eb5e28] text-white rounded-full p-2 shadow hover:bg-[#d94e1f] focus:outline-none focus:ring-2 focus:ring-[#eb5e28] transition">
+                    <span id="themeIcon" class="text-xl">🌙</span>
+                </button>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-[#252422] tracking-tight leading-tight">The Khosla Doctrine</h1>
+            <p class="mt-4 text-lg md:text-xl text-[#403d39] max-w-3xl mx-auto">An interactive exploration of Vinod Khosla's principles for building a world of abundance through technology and entrepreneurship.</p>
+            <div class="mt-7 flex justify-center">
+                <div class="flex flex-col items-center gap-3">
+                    <a href="vinod_khosla_research_report.html" target="_blank" class="modern-btn inline-flex items-center gap-2 bg-[#eb5e28] text-white font-semibold px-6 py-2 rounded-lg shadow hover:bg-[#d94e1f] focus:outline-none focus:ring-2 focus:ring-[#eb5e28] transition text-base md:text-lg">
+                        <span aria-hidden="true">📄</span> <span>Read Full Research Report</span>
+                    </a>
+                    <a href="https://www.khoslaventures.com" target="_blank" class="inline-flex items-center gap-2 text-[#2563eb] hover:text-[#1e40af] font-semibold underline text-base md:text-lg transition">
+                        <span aria-hidden="true">🌐</span> <span>Visit Khosla Ventures Website</span>
+                    </a>
+                    <a href="https://www.khoslaventures.com/team/vinod-khosla/" target="_blank" class="inline-flex items-center gap-2 text-[#06b6d4] hover:text-[#0e7490] font-semibold underline text-base md:text-lg transition">
+                        <span aria-hidden="true">👤</span> <span>Who is Vinod Khosla?</span>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <nav id="main-nav" class="sticky top-0 bg-[#f4f1ea] bg-opacity-95 backdrop-blur-sm z-20 flex justify-center border-b border-[#ccc5b9] shadow-sm">
+            <div class="flex flex-wrap justify-center space-x-2 sm:space-x-6 md:space-x-10">
+                <a href="#vision" class="nav-link text-base md:text-lg font-medium py-4 border-b-2 border-transparent transition-colors duration-300">The Vision</a>
+                <a href="#mindset" class="nav-link text-base md:text-lg font-medium py-4 border-b-2 border-transparent transition-colors duration-300">The Mindset</a>
+                <a href="#playbook" class="nav-link text-base md:text-lg font-medium py-4 border-b-2 border-transparent transition-colors duration-300">The Playbook</a>
+                <a href="#ai-mentor" class="nav-link text-base md:text-lg font-medium py-4 border-b-2 border-transparent transition-colors duration-300">AI Mentor</a>
+            </div>
+        </nav>
+
+        <main>
+            <section id="api-key-section" class="py-8 px-2 sm:px-6 text-center bg-white/70 rounded-lg my-8 border border-gray-200 shadow-sm">
+                 <h3 class="text-xl md:text-2xl font-bold text-[#252422]">Enable Interactive Features</h3>
+                <p class="text-center text-gray-600 mt-2 mb-4 max-w-2xl mx-auto">To use the AI-powered tools, please enter your Gemini API key below. You can get a free key from <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-blue-600 hover:underline">Google AI Studio</a>.</p>
+                <div class="max-w-md mx-auto">
+                    <input type="password" id="apiKeyInput" class="block w-full border-gray-300 rounded-md shadow-sm sm:text-base p-2 text-center focus:ring-2 focus:ring-[#eb5e28]" placeholder="Enter your Gemini API key here">
+                </div>
+            </section>
+
+            <section id="vision" class="py-10 md:py-20 px-2 sm:px-8 border-b border-[#ccc5b9]">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#252422]">The AI-Powered Epoch</h2>
+                    <p class="mt-4 text-lg md:text-xl text-[#403d39]">The foundation of Khosla's doctrine is his belief that AI will fundamentally reinvent society by making expertise abundant and accessible. He predicts this technological shift will automate the vast majority of human labor, creating a new economic reality.</p>
+                </div>
+                <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 text-center">
+                    <div class="modern-card bg-white p-7 rounded-xl shadow-md border border-gray-200">
+                        <p class="text-5xl md:text-6xl font-extrabold text-[#eb5e28]">80%</p>
+                        <h3 class="mt-3 text-lg md:text-xl font-semibold text-[#252422]">of Doctor's Work</h3>
+                        <p class="mt-2 text-[#403d39]">Will be replaced by "Dr. Algorithm," providing superior, nearly free primary care and diagnostics to the world.</p>
+                    </div>
+                    <div class="modern-card bg-white p-7 rounded-xl shadow-md border border-gray-200">
+                        <p class="text-5xl md:text-6xl font-extrabold text-[#eb5e28]">80%</p>
+                        <h3 class="mt-3 text-lg md:text-xl font-semibold text-[#252422]">of All Jobs</h3>
+                        <p class="mt-2 text-[#403d39]">Will have their core tasks automated by AI, freeing humanity from the "burden of work" to pursue passion and creativity.</p>
+                    </div>
+                    <div class="modern-card bg-white p-7 rounded-xl shadow-md border border-gray-200">
+                        <p class="text-5xl md:text-6xl font-extrabold text-[#eb5e28]">80%</p>
+                        <h3 class="mt-3 text-lg md:text-xl font-semibold text-[#252422]">of Cars Eliminated</h3>
+                        <p class="mt-2 text-[#403d39]">Will be replaced by autonomous "robo-pods," freeing up vast amounts of urban land for parks, housing, and communities.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="mindset" class="py-10 md:py-20 px-2 sm:px-8 border-b border-[#ccc5b9]">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#252422]">The Entrepreneurial Mindset</h2>
+                    <p class="mt-4 text-lg md:text-xl text-[#403d39]">To build this future, founders must adopt a specific set of principles. This mindset is not about business tactics, but about the internal compass required to navigate extreme uncertainty and pursue radical innovation.</p>
+                </div>
+                <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                    <div class="modern-card bg-white p-7 rounded-xl shadow-md border border-gray-200">
+                        <h3 class="text-2xl font-bold text-center text-[#252422]">The Necessity of Failure</h3>
+                        <p class="text-center mt-2 text-[#403d39]">"My willingness to fail is what gives me the ability to succeed." This chart illustrates Khosla's 90% Rule: investing in ventures with a high chance of failure, provided the potential success is world-changing.</p>
+                        <div class="chart-container mt-6">
+                            <canvas id="failureChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="modern-card bg-white p-7 rounded-xl shadow-md border border-gray-200 flex flex-col">
+                        <h3 class="text-2xl font-bold text-center text-[#252422]">De-risk Your Idea ✨</h3>
+                        <p class="text-center mt-2 text-[#403d39]">Enter your audacious startup idea below. The AI will generate a set of "base camps" to help you de-risk your journey to Mt. Everest.</p>
+                        <div class="mt-6 flex-grow flex flex-col">
+                            <textarea id="ideaInput" rows="3" class="w-full border-gray-300 rounded-md shadow-sm p-2 focus:ring-2 focus:ring-[#eb5e28]" placeholder="e.g., A personal AI tutor for every child on Earth."></textarea>
+                            <button id="deRiskButton" class="modern-btn mt-4 w-full bg-[#eb5e28] text-white font-bold py-2 px-4 rounded-lg hover:bg-opacity-90 transition">Generate Base Camps</button>
+                            <div id="deRiskResult" class="mt-4 text-left text-gray-700 p-4 bg-gray-50 rounded-md border border-gray-200 min-h-[100px]"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="playbook" class="py-10 md:py-20 px-2 sm:px-8 border-b border-[#ccc5b9]">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#252422]">The Founder's Playbook</h2>
+                    <p class="mt-4 text-lg md:text-xl text-[#403d39]">This mindset translates into a concrete operational playbook for building and scaling a high-impact company. It focuses on the three most critical pillars of execution: people, capital, and strategy.</p>
+                </div>
+                <div class="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+                    <div class="modern-card bg-white p-7 rounded-xl shadow-md border border-gray-200 lg:col-span-2">
+                        <h3 class="text-2xl font-bold text-center text-[#252422]">Venture Assistance vs. Traditional VC</h3>
+                        <p class="text-center mt-2 text-[#403d39]">Khosla argues that 70-80% of VCs add negative value. His "Venture Assistance" model focuses on providing hands-on help from experienced operators, which he believes is far more valuable than capital alone.</p>
+                        <div class="mt-6 responsive-table">
+                            <table class="w-full text-left min-w-[340px]">
+                                <thead>
+                                    <tr class="border-b-2 border-[#ccc5b9]">
+                                        <th class="p-3 font-semibold text-[#252422]">Feature</th>
+                                        <th class="p-3 font-semibold text-[#eb5e28]">Venture Assistance</th>
+                                        <th class="p-3 font-semibold text-gray-500">Traditional VC</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    <tr><td class="p-3 font-medium">Primary Role</td><td class="p-3">Company Builder</td><td class="p-3">Money Manager</td></tr>
+                                    <tr><td class="p-3 font-medium">Source of Value</td><td class="p-3">Hands-on Help</td><td class="p-3">Passive Networking</td></tr>
+                                    <tr><td class="p-3 font-medium">Advisor Qualification</td><td class="p-3">Experienced Operator</td><td class="p-3">Financial Background</td></tr>
+                                    <tr><td class="p-3 font-medium">Goal for Founder</td><td class="p-3">Achieve Grand Vision</td><td class="p-3">Meet Revenue Plan</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modern-card bg-white p-7 rounded-xl shadow-md border border-gray-200">
+                        <h3 class="text-2xl font-bold text-center text-[#252422]">"Gene Pool Engineering"</h3>
+                        <p class="text-center mt-2 text-[#403d39]">"A company becomes the people it hires." This chart shows Khosla's recommended time allocation for a founder, emphasizing recruiting as the most critical, strategic activity.</p>
+                        <div class="chart-container mt-6">
+                            <canvas id="recruitingChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="modern-card bg-white p-7 rounded-xl shadow-md border border-gray-200 flex flex-col">
+                        <h3 class="text-2xl font-bold text-center text-[#252422]">"Flexi-Planning"</h3>
+                        <p class="text-center mt-2 text-[#403d39]">Static business plans are an illusion. Instead, founders should "plan to plan" by iterating in short cycles to test assumptions and adapt based on real-world feedback.</p>
+                        <div class="flex-grow flex items-center justify-center space-x-2 md:space-x-4 text-center mt-6">
+                            <div class="bg-gray-100 p-4 rounded-lg border border-gray-300"><p class="font-semibold">Plan</p><p class="text-xs text-gray-500">(3-6 months)</p></div>
+                            <div class="text-2xl font-light text-[#eb5e28]">&rarr;</div>
+                            <div class="bg-gray-100 p-4 rounded-lg border border-gray-300"><p class="font-semibold">Execute</p><p class="text-xs text-gray-500">(Run experiments)</p></div>
+                            <div class="text-2xl font-light text-[#eb5e28]">&rarr;</div>
+                            <div class="bg-gray-100 p-4 rounded-lg border border-gray-300"><p class="font-semibold">Learn</p><p class="text-xs text-gray-500">(Get feedback)</p></div>
+                            <div class="text-2xl font-light text-[#eb5e28]">&rarr;</div>
+                            <div class="bg-gray-100 p-4 rounded-lg border border-gray-300"><p class="font-semibold">Adapt</p><p class="text-xs text-gray-500">(Update plan)</p></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="ai-mentor" class="py-10 md:py-20 px-2 sm:px-8">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#252422]">Consult the AI Mentor ✨</h2>
+                    <p class="mt-4 text-lg md:text-xl text-[#403d39]">Have a question? Ask the AI trained on the Khosla doctrine for advice on your entrepreneurial journey. Remember to add your API key at the top of the page.</p>
+                </div>
+                <div class="mt-10 max-w-2xl mx-auto modern-card bg-white p-7 rounded-xl shadow-md border border-gray-200">
+                    <label for="mentorQuestion" class="block text-sm font-medium text-gray-700">Your Question:</label>
+                    <textarea id="mentorQuestion" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 focus:ring-2 focus:ring-[#eb5e28]" placeholder="e.g., How do I convince investors my high-risk idea is worth funding?"></textarea>
+                    <button id="askMentorButton" class="modern-btn mt-4 w-full bg-[#252422] text-white font-bold py-3 px-4 rounded-lg hover:bg-opacity-90 transition">Ask the Mentor</button>
+                    <div id="mentorResponse" class="mt-6 text-left text-gray-700 p-4 bg-gray-50 rounded-md border border-gray-200 min-h-[150px]"></div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="text-center py-8 md:py-12 text-sm text-gray-500 border-t border-[#ccc5b9] mt-8">
+            <p>"Try and fail, but don't fail to try." - Vinod Khosla</p>
+        </footer>
+    </div>
+
+    <script>
+        // Dark/Light mode toggle logic
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                document.getElementById('themeIcon').textContent = '🌙';
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                document.getElementById('themeIcon').textContent = '☀️';
+            }
+        }
+        // On load, set theme from localStorage or default to dark
+        (function() {
+            let theme = localStorage.getItem('theme');
+            if (!theme) theme = 'dark';
+            setTheme(theme);
+        })();
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            const isDark = document.documentElement.classList.contains('dark');
+            setTheme(isDark ? 'light' : 'dark');
+        });
+
+
+        function getChartColors() {
+            const isDark = document.documentElement.classList.contains('dark');
+            return isDark ? {
+                primary: '#38bdf8', // sky-400
+                secondary: '#2dd4bf', // teal-400
+                light: '#334155', // slate-700
+                background: '#232326'
+            } : {
+                primary: '#2563eb', // blue-600
+                secondary: '#06b6d4', // cyan-500
+                light: '#e0e7ef', // light blue/gray
+                background: '#ffffff'
+            };
+        }
+
+        function getChartTooltipConfig() {
+            const isDark = document.documentElement.classList.contains('dark');
+            return {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) { return label.join(' '); }
+                                return label;
+                            }
+                        },
+                        backgroundColor: isDark ? '#18181b' : '#252422',
+                        titleColor: isDark ? '#fbbf24' : '#fff',
+                        bodyColor: isDark ? '#e5e7eb' : '#fff',
+                        titleFont: { weight: 'bold' },
+                        bodyFont: { size: 14 },
+                        padding: 12,
+                        cornerRadius: 4
+                    },
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: isDark ? '#fbbf24' : '#403d39',
+                            font: { size: 14 }
+                        }
+                    }
+                }
+            };
+        }
+
+
+        // Chart.js theme-aware rendering
+        let failureChart, recruitingChart;
+        function renderCharts() {
+            const chartColors = getChartColors();
+            const chartTooltipConfig = getChartTooltipConfig();
+            if (failureChart) failureChart.destroy();
+            if (recruitingChart) recruitingChart.destroy();
+            const failureCtx = document.getElementById('failureChart').getContext('2d');
+            failureChart = new Chart(failureCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['High-Risk Failure', 'World-Changing Success'],
+                    datasets: [{ data: [90, 10], backgroundColor: [chartColors.light, chartColors.primary], borderColor: chartColors.background, borderWidth: 4, hoverOffset: 8 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, cutout: '70%', ...chartTooltipConfig }
+            });
+            const recruitingCtx = document.getElementById('recruitingChart').getContext('2d');
+            recruitingChart = new Chart(recruitingCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Recruiting', 'Product & Strategy', 'Other Operations'],
+                    datasets: [{ data: [40, 35, 25], backgroundColor: [chartColors.primary, chartColors.secondary, chartColors.light], borderColor: chartColors.background, borderWidth: 4, hoverOffset: 8 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, ...chartTooltipConfig }
+            });
+        }
+        renderCharts();
+        // Re-render charts on theme change
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            setTimeout(renderCharts, 100); // Wait for theme class to apply
+        });
+
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach(link => {
+                        link.classList.toggle('active', link.getAttribute('href').substring(1) === entry.target.id);
+                    });
+                }
+            });
+        }, { root: null, rootMargin: '0px', threshold: 0.4 });
+        sections.forEach(section => { observer.observe(section); });
+
+
+        // Gemini API Logic
+        const deRiskButton = document.getElementById('deRiskButton');
+        const ideaInput = document.getElementById('ideaInput');
+        const deRiskResult = document.getElementById('deRiskResult');
+        
+        const askMentorButton = document.getElementById('askMentorButton');
+        const mentorQuestion = document.getElementById('mentorQuestion');
+        const mentorResponse = document.getElementById('mentorResponse');
+        const apiKeyInput = document.getElementById('apiKeyInput');
+
+        async function callGeminiAPI(prompt, resultElement) {
+            const apiKey = apiKeyInput.value;
+            if (!apiKey) {
+                resultElement.innerHTML = '<p class="text-red-600 font-semibold">Please enter your Gemini API key at the top of the page to use this feature.</p>';
+                return;
+            }
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            
+            resultElement.innerHTML = '<div class="flex justify-center items-center h-full"><div class="loader"></div></div>';
+            const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error.message || `API request failed with status ${response.status}`);
+                }
+                
+                const result = await response.json();
+                if (result.candidates && result.candidates.length > 0 && result.candidates[0].content && result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    resultElement.innerHTML = text.replace(/\n/g, '<br>');
+                } else {
+                    resultElement.innerText = "Sorry, the model returned an empty response.";
+                }
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                resultElement.innerHTML = `<p class="text-red-600 font-semibold">An error occurred: ${error.message}. Please check your API key and network connection.</p>`;
+            }
+        }
+
+        deRiskButton.addEventListener('click', () => {
+            const idea = ideaInput.value;
+            if (!idea) {
+                deRiskResult.innerText = "Please enter an idea to de-risk.";
+                return;
+            }
+            const prompt = `Act as a venture assistant in the style of Vinod Khosla. A founder's audacious idea is: "${idea}". Their grand vision is their 'Mt. Everest'. Break this down into 3-4 'base camps'. Each base camp should be a critical milestone or a set of key assumptions to test to de-risk the project. Frame your response as if you are building a flexible plan. Start with a sentence acknowledging the audacity of the goal. Format the output as a list.`;
+            callGeminiAPI(prompt, deRiskResult);
+        });
+
+        askMentorButton.addEventListener('click', () => {
+            const question = mentorQuestion.value;
+            if (!question) {
+                mentorResponse.innerHTML = `<p class="text-gray-500 italic">Please ask a question.</p>`;
+                return;
+            }
+            const prompt = `You are an AI persona of Vinod Khosla. Answer the following question from an entrepreneur based on your core principles: techno-optimism, the necessity of failure for massive success, principled contrarianism, the value of 'venture assistance' over traditional VC, and the importance of an audacious vision. Be direct, opinionated, and encouraging of high-risk, high-reward thinking. Do not be overly verbose. The question is: "${question}"`;
+            callGeminiAPI(prompt, mentorResponse);
+        });
+
+    </script>
+
+</body>
+</html>
