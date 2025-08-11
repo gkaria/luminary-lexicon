@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jensen Huang</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      background: #f4f1ea;
+      color: #252422;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 900px;
+      margin: 48px auto;
+      padding: 0 16px;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 24px;
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1em;
+      transition: color 0.2s;
+    }
+    .back-link:hover {
+      color: #fbbf24;
+    }
+    h1 {
+      text-align: center;
+      color: #1976d2;
+      font-size: 2.8rem;
+      font-weight: 800;
+      margin-bottom: 18px;
+      letter-spacing: -1px;
+    }
+    .card-section {
+      background: #fff;
+      border-radius: 1.25rem;
+      box-shadow: 0 2px 12px 0 rgba(25,118,210,0.07);
+      padding: 36px 28px 28px 28px;
+      margin-bottom: 2.5rem;
+    }
+    .card-section:last-child {
+      margin-bottom: 0;
+    }
+    h2 {
+      color: #1976d2;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+    h3 {
+      color: #2563eb;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-top: 24px;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 1.08em;
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+    blockquote {
+      border-left: 4px solid #1976d2;
+      margin: 18px 0;
+      padding: 12px 18px;
+      background: #f4f1ea;
+      color: #1976d2;
+      font-style: italic;
+      font-size: 1.1em;
+    }
+    ul {
+      margin: 0 0 12px 18px;
+      padding: 0 0 0 18px;
+      font-size: 1.08em;
+    }
+    @media (max-width: 700px) {
+      .container { padding: 0 2px; }
+      .card-section { padding: 18px 8px 18px 8px; }
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="../index.html" class="back-link">&larr; Back to Lexicon</a>
+    <h1>Jensen Huang: First Principles Thinking</h1>
+    <div class="card-section">
+      <h2>1. Break It Down to the Basics</h2>
+      <p>Instead of copying how others solve a problem, strip it down to: What are the laws of nature, constraints, or foundational facts? What do we know for sure is true?</p>
+      <p><strong>Example:</strong> When NVIDIA pivoted into AI and data centers, Jensen Huang didn't just follow trends. He examined the fundamental principles of computing, the raw power of parallel processing (a GPU's strength), and the future needs of AI workloads. This led to the insight: GPUs could do much more than graphics.</p>
+    </div>
+    <div class="card-section">
+      <h2>2. Rebuild with Fresh Eyes</h2>
+      <p>Once you're at the core, rebuild the solution from the ground up. Ask: "If we had to start from scratch, knowing what we know now, how would we do this?"</p>
+      <blockquote>You can learn how something can be done and then go back to first principles and ask yourself, 'Given the conditions today… how would I reinvent this whole thing?'</blockquote>
+    </div>
+    <div class="card-section">
+      <h2>3. Avoid the Trap of "This Is How It's Always Done"</h2>
+      <p>First-principles thinkers don't assume best practices are always right. Jensen encourages teams to challenge assumptions, even if it means discarding years of conventional wisdom.</p>
+    </div>
+    <div class="card-section">
+      <h2>Why This Matters at NVIDIA</h2>
+      <ul>
+        <li>Expand beyond gaming into AI, robotics, and autonomous vehicles</li>
+        <li>Create CUDA (a programming language for GPUs) when no one else was thinking that way</li>
+        <li>Build chips like the H100, tailored for deep learning from scratch</li>
+      </ul>
+    </div>
+    <div class="card-section">
+      <h2>Pivotal Moment: Launching CUDA (2006)</h2>
+      <p>In the early 2000s, GPUs were primarily used for rendering graphics. Scientists and engineers began realizing GPUs might help with scientific computing—but programming them required deep knowledge of graphics APIs.</p>
+      <h3>The Bold Move: Inventing CUDA</h3>
+      <p>Jensen Huang asked: "What if we built an entire programming platform that lets developers use GPUs like general-purpose supercomputers?" This had never been done before. No other company was considering turning graphics chips into compute engines.</p>
+      <h3>First-Principles Thinking in Action</h3>
+      <p>Instead of assuming: "GPUs = graphics, and should be controlled through graphics APIs like OpenGL," they asked: "What if the GPU is just a highly parallel processor—and we gave people tools to program it directly?" This idea became CUDA (Compute Unified Device Architecture), launched in 2006.</p>
+      <h3>Why This Was Risky</h3>
+      <ul>
+        <li>It required years of R&D.</li>
+        <li>Developers were unfamiliar with how to use it.</li>
+        <li>Wall Street was skeptical—investors questioned why NVIDIA was investing in something so "out of scope."</li>
+      </ul>
+      <h3>Long-Term Payoff</h3>
+      <ul>
+        <li>CUDA became the backbone for AI research.</li>
+        <li>When deep learning exploded in the 2010s (thanks to ImageNet breakthroughs), NVIDIA was the only company with the right hardware and software stack ready.</li>
+        <li>CUDA + GPUs = dominant AI infrastructure.</li>
+      </ul>
+    </div>
+    <div class="card-section">
+      <h2>Leadership Takeaway</h2>
+      <ul>
+        <li>Jensen Huang leads like a founder-engineer: He doesn't chase fads—he prepares for inevitabilities.</li>
+        <li>He empowers engineers to take moonshot risks and backs them with time and patience.</li>
+        <li>He builds tools for developers, not just products—creating ecosystems, not just hardware.</li>
+      </ul>
+    </div>
+    <div class="card-section">
+      <h2>References</h2>
+      <ul>
+        <li>Steve Jobs in 1983 predicting LLMs: <a href="https://tinyurl.com/429pradn" target="_blank">link</a></li>
+        <li>Chat GPT conversation reference: <a href="https://chatgpt.com/share/67f57382-f474-800b-b6af-7152e4b32673" target="_blank">link</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
