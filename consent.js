@@ -3,7 +3,7 @@ function showConsentBanner() {
         const banner = document.createElement('div');
         banner.id = 'consent-banner';
         banner.innerHTML = `
-            <p>This website uses cookies to ensure you get the best experience. We use Google Analytics to track website usage. By clicking "Accept", you consent to our use of cookies for analytics.</p>
+            <p>This website uses cookies to ensure you get the best experience. By clicking "Accept", you consent to our use of cookies for analytics.</p>
             <button id="accept">Accept</button>
             <button id="decline">Decline</button>
         `;
