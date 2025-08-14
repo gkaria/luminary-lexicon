@@ -103,6 +103,24 @@
       h2 { font-size: 1.3rem; }
     }
   </style>
+    <link rel="stylesheet" href="../consent.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8EB1VYDLLQ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+
+      // Default consent mode
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'analytics_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+      });
+
+      gtag('js', new Date());
+      gtag('config', 'G-8EB1VYDLLQ');
+    </script>
 </head>
 <body>
   <div class="container">
@@ -130,5 +148,6 @@
       <img src="images/Alan_Turing_one_pager.png" alt="Alan Turing One Pager" class="main-bottom-img">
     </div>
   </div>
+  <script src="../consent.js"></script>
 </body>
 </html>
