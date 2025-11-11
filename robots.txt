@@ -1,0 +1,9 @@
+# robots.txt for Luminary Lexicon
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://gkaria.github.io/luminary-lexicon/sitemap.xml
+
+# Crawl delay (optional, helps avoid overloading)
+Crawl-delay: 1
