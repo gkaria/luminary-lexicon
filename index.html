@@ -3,7 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luminary Lexicon</title>
+    <title>Luminary Lexicon - Ideas from Great Thinkers in Tech & Innovation</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Explore philosophies and frameworks from influential thinkers like Alan Turing, Steve Jobs, Jensen Huang, and Vinod Khosla. A curated treasury of innovation insights.">
+    <meta name="keywords" content="innovation, technology, philosophy, Alan Turing, Steve Jobs, Jensen Huang, Vinod Khosla, first principles thinking, entrepreneurship, AI, leadership">
+    <meta name="author" content="Luminary Lexicon">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gkaria.github.io/luminary-lexicon/">
+    <meta property="og:title" content="Luminary Lexicon - Ideas from Great Thinkers">
+    <meta property="og:description" content="Explore philosophies and frameworks from influential thinkers in technology, science, and innovation.">
+    <meta property="og:image" content="https://gkaria.github.io/luminary-lexicon/alan-turing/images/Alan_Turing_article.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://gkaria.github.io/luminary-lexicon/">
+    <meta property="twitter:title" content="Luminary Lexicon - Ideas from Great Thinkers">
+    <meta property="twitter:description" content="Explore philosophies and frameworks from influential thinkers in technology, science, and innovation.">
+    <meta property="twitter:image" content="https://gkaria.github.io/luminary-lexicon/alan-turing/images/Alan_Turing_article.png">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://gkaria.github.io/luminary-lexicon/">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -38,8 +60,49 @@
             text-align: center;
             color: #9ca3af;
             font-size: 1.1rem;
-            margin-bottom: 48px;
+            margin-bottom: 24px;
             line-height: 1.6;
+        }
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 48px auto;
+            position: relative;
+        }
+        .search-box {
+            width: 100%;
+            padding: 16px 48px 16px 20px;
+            font-size: 1rem;
+            border: 2px solid rgba(56,189,248,0.2);
+            border-radius: 12px;
+            background: #18181b;
+            color: #e5e7eb;
+            font-family: 'Inter', Arial, sans-serif;
+            transition: all 0.3s ease;
+        }
+        .search-box:focus {
+            outline: none;
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 3px rgba(56,189,248,0.1);
+        }
+        .search-box::placeholder {
+            color: #9ca3af;
+        }
+        .search-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            font-size: 1.2rem;
+        }
+        html.light .search-box {
+            background: #fff;
+            color: #252422;
+            border-color: rgba(25,118,210,0.2);
+        }
+        html.light .search-box:focus {
+            border-color: #1976d2;
+            box-shadow: 0 0 0 3px rgba(25,118,210,0.1);
         }
         .luminary-grid {
             display: grid;
@@ -171,7 +234,13 @@
     <div class="container">
         <h1>Luminary Lexicon</h1>
         <p class="subtitle">Learnings from great thinkers in fields of Philosophy, Science, and Technology. A treasury of influential ideas that shape innovation.</p>
-        <div class="luminary-grid">
+
+        <div class="search-container">
+            <input type="text" id="searchBox" class="search-box" placeholder="Search luminaries by name, theme, or keywords..." aria-label="Search luminaries">
+            <span class="search-icon">🔍</span>
+        </div>
+
+        <div class="luminary-grid" id="luminaryGrid">
             <a class="luminary-card" href="alan-turing/alan-turing.html">
                <div class="luminary-name">Alan Turing</div>
                <div class="luminary-subtitle">The Father of Modern Computing & AI</div>
@@ -191,6 +260,70 @@
         </div>
     </div>
     <script>
+        // Search functionality
+        const luminaries = [
+            {
+                name: "Alan Turing",
+                subtitle: "The Father of Modern Computing & AI",
+                url: "alan-turing/alan-turing.html",
+                keywords: ["computing", "AI", "artificial intelligence", "Turing machine", "Turing test", "cryptography", "Enigma", "mathematics", "algorithms"]
+            },
+            {
+                name: "Jensen Huang",
+                subtitle: "First-Principles Thinking & AI Infrastructure",
+                url: "jensen-huang/jensen-huang.html",
+                keywords: ["NVIDIA", "GPU", "CUDA", "first principles", "AI infrastructure", "deep learning", "hardware", "innovation", "leadership"]
+            },
+            {
+                name: "Steve Jobs",
+                subtitle: "Technology Meets Liberal Arts",
+                url: "steve-jobs/steve-jobs.html",
+                keywords: ["Apple", "design", "innovation", "focus", "simplicity", "user experience", "creativity", "entrepreneurship", "iPhone", "Pixar"]
+            },
+            {
+                name: "Vinod Khosla",
+                subtitle: "Techno-Optimism & Moonshot Thinking",
+                url: "vinod-khosla/vinod-khosla.html",
+                keywords: ["venture capital", "entrepreneurship", "Mount Everest", "first principles", "failure", "persistence", "AI", "techno-optimism", "innovation"]
+            }
+        ];
+
+        function renderLuminaries(filteredLuminaries) {
+            const grid = document.getElementById('luminaryGrid');
+            if (filteredLuminaries.length === 0) {
+                grid.innerHTML = '<p style="text-align: center; color: #9ca3af; grid-column: 1/-1; padding: 40px 20px;">No luminaries found matching your search.</p>';
+                return;
+            }
+
+            grid.innerHTML = filteredLuminaries.map(luminary => `
+                <a class="luminary-card" href="${luminary.url}">
+                    <div class="luminary-name">${luminary.name}</div>
+                    <div class="luminary-subtitle">${luminary.subtitle}</div>
+                </a>
+            `).join('');
+        }
+
+        // Initialize with all luminaries
+        renderLuminaries(luminaries);
+
+        // Search functionality
+        document.getElementById('searchBox').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+
+            if (query === '') {
+                renderLuminaries(luminaries);
+                return;
+            }
+
+            const filtered = luminaries.filter(luminary => {
+                return luminary.name.toLowerCase().includes(query) ||
+                       luminary.subtitle.toLowerCase().includes(query) ||
+                       luminary.keywords.some(keyword => keyword.toLowerCase().includes(query));
+            });
+
+            renderLuminaries(filtered);
+        });
+
         // Theme toggle logic (default dark)
         function setTheme(theme) {
             if (theme === 'dark') {

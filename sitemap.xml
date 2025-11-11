@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Homepage -->
+  <url>
+    <loc>https://gkaria.github.io/luminary-lexicon/</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Alan Turing -->
+  <url>
+    <loc>https://gkaria.github.io/luminary-lexicon/alan-turing/alan-turing.html</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Jensen Huang -->
+  <url>
+    <loc>https://gkaria.github.io/luminary-lexicon/jensen-huang/jensen-huang.html</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Steve Jobs -->
+  <url>
+    <loc>https://gkaria.github.io/luminary-lexicon/steve-jobs/steve-jobs.html</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Vinod Khosla -->
+  <url>
+    <loc>https://gkaria.github.io/luminary-lexicon/vinod-khosla/vinod-khosla.html</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Project Documentation -->
+  <url>
+    <loc>https://gkaria.github.io/luminary-lexicon/PROJECT_STRUCTURE</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+</urlset>
