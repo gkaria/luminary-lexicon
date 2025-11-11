@@ -106,7 +106,7 @@ NVIDIA regularly releases new GPU architectures that make previous generations o
 **Philosophy:** If you don't obsolete your own products, someone else will. Better to cannibalize yourself than let competitors do it.
 
 **Examples:**
-- Each GPU generation (Kepler ’ Maxwell ’ Pascal ’ Volta ’ Turing ’ Ampere ’ Hopper) made previous ones outdated
+- Each GPU generation (Kepler Â’ Maxwell Â’ Pascal Â’ Volta Â’ Turing Â’ Ampere Â’ Hopper) made previous ones outdated
 - This rapid innovation keeps competitors perpetually behind
 
 ## 10. The "Zero Billion Dollar Market" Strategy
