@@ -111,7 +111,7 @@ The "Transformer" paper that enabled GPT, BERT, and modern LLMsall trained on N
 
 ## On Computer Graphics and Gaming
 
-### Real-Time Rendering by Tomas Akenine-Möller et al. (4th edition, 2018)
+### Real-Time Rendering by Tomas Akenine-MÃ¶ller et al. (4th edition, 2018)
 Comprehensive book on 3D graphics techniques.
 
 **Why read it:** Understand NVIDIA's original business (graphics) and how those capabilities transferred to AI.
